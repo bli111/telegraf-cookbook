@@ -38,8 +38,8 @@ action :create do
           baseurl  "#{node['telegraf']['package_url']}/centos/\$releasever/\$basearch/stable"
         end
         gpgkey  "#{node['telegraf']['package_url']}/influxdb.key"
-        only_if { new_resource.include_repository }
       end
+      only_if { new_resource.include_repository }
     elsif platform_family? 'debian'
       package 'apt-transport-https' do
         only_if { new_resource.include_repository }
