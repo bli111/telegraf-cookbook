@@ -38,7 +38,7 @@ action :create do
           baseurl  "#{node['telegraf']['package_url']}/centos/\$releasever/\$basearch/stable"
         end
         gpgkey  "#{node['telegraf']['package_url']}/influxdb.key"
-        put "new_resource.inclue_repository #{new_resource.include_repository}"
+        log "new_resource.inclue_repository #{new_resource.include_repository}"
         only_if { new_resource.include_repository }
       end
       
