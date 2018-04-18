@@ -17,7 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-property :include_repository, [TrueClass, FalseClass], default: true
+property :include_repository, kind_of: [TrueClass, FalseClass], default: true
 property :install_version, [String, nil], default: nil
 property :install_type, String, default: 'package'
 
@@ -38,8 +38,10 @@ action :create do
           baseurl  "#{node['telegraf']['package_url']}/centos/\$releasever/\$basearch/stable"
         end
         gpgkey  "#{node['telegraf']['package_url']}/influxdb.key"
+        put "new_resource.inclue_repository #{new_resource.include_repository}"
+        only_if { new_resource.include_repository }
       end
-      only_if { new_resource.include_repository }
+      
     elsif platform_family? 'debian'
       package 'apt-transport-https' do
         only_if { new_resource.include_repository }
