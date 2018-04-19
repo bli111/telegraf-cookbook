@@ -30,11 +30,9 @@ as needed.  Alternatively, you can use the custom resources directly.
 
 | Key                                  | Type   | Description                                           | Default                                                                                                                                                             |
 |--------------------------------------|--------|-------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| node['telegraf']['version']          | String | Version of telegraf to install, nil = latest          | '0.10.0-1'                                                                                                                                                          |
 | node['telegraf']['config_file_path'] | String | Location of the telgraf main config file              | '/etc/telegraf/telegraf.conf'                                                                                                                                       |
 | node['telegraf']['config']           | Hash   | Config variables to be written to the telegraf config | {'tags' => {},'agent' => {'interval' => '10s','round_interval' => true,'flush_interval' => '10s','flush_jitter' => '5s'}                                            |
 | node['telegraf']['outputs']          | Hash  | telegraf outputs                                      | {'influxdb' => {'urls' => ['http://localhost:8086'],'database' => 'telegraf','precision' => 's'}}                                                                   |
-| node['telegraf']['include_repository'] | [TrueClass, FalseClass] | Whether or not to pull in the InfluxDB repository to install from. | true |
 | node['telegraf']['inputs']           | Hash   | telegraf inputs                                       | {'cpu' => {'percpu' => true,'totalcpu' => true,'drop' => ['cpu_time'],},'disk' => {},'io' => {},'mem' => {},'net' => {},'swap' => {},'system' => {}}                |
 | node['telegraf']['perf_counters']           | Hash   | telegraf performance counters | {{  'Processor' => { 'Instances' => ['*'] 'Counters' => ['% Idle Time','% Interrupt Time','% Privileged Time','% User Time','% Processor Time','% DPC Time',],'Measurement' => 'win_cpu','IncludeTotal' => true}} |
 
@@ -52,7 +50,12 @@ telegraf_install 'default' do
   action :create
 end
 ```
+##### Common Properties
 
+* `install_version` - The version of the telegraf to pull down. Default is latest.
+* `include_repository` - Whether or not to pull in the InfluxDB repository to install from. Default is true..
+* `install_type` - Software package type such as package for rpms and debian for deb files. Default is package  .
+ 
 #### telegraf_config
 
 Writes out the telegraf configuration file.  Optionally includes outputs and inputs.
